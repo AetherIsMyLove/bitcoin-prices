@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Raleway', sans-serif;
+            font-weight: bold;
+        }
+        
+        .bitcoin {
+            width: 100vw;
+            height: 100vh;
+            background-image: url("https://img.lovepik.com/photo/40010/2903.jpg_wh860.jpg");
+            background-size: cover;
+            position: relative;
+        }
+        
+        .CheckValue {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        input {
+            border: 1px solid yellow!important;
+            background: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bitcoin">
+        <h1 style="text-align: center;">
+            <font color='yellow'>BITCOIN TO USD Converter</font>
+        </h1>
+        <div class="CheckValue">
+            <div class="form-group">
+                <label for="bitcoin">BTC:</label>
+                <input type="text" id="bitcoin" class="form-control"><br>
+            </div>
+            <div class="form-group">
+                <label for="USD">USD:</label>
+                <input type="text" id="usd" class="form-control" disabled><br>
+            </div>
+            <button id="btn" class="btn btn-warning">Click</button>
+
+
+        </div>
+
+    </div>
+    <script>
+        var btn = document.getElementById('btn')
+        btn.addEventListener("click", () => {
+            fetch("https://api.coindesk.com/v1/bpi/currentprice.json")
+                .then((res) => {
+                    return (res.json())
+                })
+                .then((data) => {
+                    var btc = document.getElementById('bitcoin').value
+                    var usd = document.getElementById('usd')
+                    usd.value = parseFloat(data.bpi.USD.rate_float) * parseFloat(btc)
+                })
+        })
+    </script>
+</body>
+
+</html>
